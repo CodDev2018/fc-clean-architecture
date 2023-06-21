@@ -1,11 +1,13 @@
-const REGEX_EMAIL = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+import Address from "./address";
+
+const REGEX_EMAIL = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/s;
 
 export default class Customer {
-  _id: string;
-  _name: string;
-  _email: string;
-  _address!: Address;
-  _active: boolean = false;
+  private _id: string;
+  private _name: string;
+  private _email: string;
+  private _address!: Address;
+  private _active: boolean = false;
 
   constructor(id: string, name: string, email: string) {
     this._id = id;
@@ -26,12 +28,23 @@ export default class Customer {
     if (this._email?.length === 0) {
       throw new Error("Email is required");
     }
-
     if (!REGEX_EMAIL.test(this._email)) {
       throw new Error("Email is invalid");
     }
 
     return true;
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  get email() {
+    return this._email;
+  }
+
+  isActive(): boolean {
+    return this._active;
   }
 
   changeName(name: string) {
