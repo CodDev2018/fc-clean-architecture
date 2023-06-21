@@ -37,6 +37,12 @@ export default class Order {
     this.validate();
   }
 
+  removeItem(orderItem: OrderItem) {
+    this._items = this._items.filter(item => item.id !== orderItem.id);
+    this._total -= orderItem.totalPrice;
+    this.validate();
+  }
+
   get id() {
     return this._id;
   }

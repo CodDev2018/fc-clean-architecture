@@ -80,7 +80,9 @@ export default class OrderRepository implements OrderRepositoryInterface {
   }
 
   async findAll(): Promise<Order[]> {
-    const orders = await OrderModel.findAll({include: [{ model: OrderItemModel }]});
+    const orders = await OrderModel.findAll({
+      include: [{ model: OrderItemModel }],
+    });
 
     if (!orders || orders.length === 0) {
       throw new Error("Orders not found");
@@ -172,7 +174,6 @@ export default class OrderRepository implements OrderRepositoryInterface {
         async (item) =>
           await OrderItemModel.destroy({
             where: { id: item.id },
-            logging: console.log,
           })
       )
     );

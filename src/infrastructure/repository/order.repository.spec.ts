@@ -79,13 +79,15 @@ describe("Order repository unit tests", () => {
     await productRepository.create(product);
 
     const orderItem = new OrderItem("oi1", "p1", "Product 1", 10, 2);
-    const order = new Order("o1", "c1", [orderItem]);
+    const orderItem2 = new OrderItem("oi2", "p1", "Product 1", 10, 3);
+    const order = new Order("o1", "c1", [orderItem, orderItem2]);
 
     const orderRepository = new OrderRepository();
     await orderRepository.create(order);
 
-    const orderItem2 = new OrderItem("oi2", "p1", "Product 1", 10, 3);
-    order.addItem(orderItem2);
+    const orderItem3 = new OrderItem("oi3", "p1", "Product 1", 10, 3);
+    order.addItem(orderItem3);
+    order.removeItem(orderItem);
 
     await orderRepository.update(order);
 
@@ -100,21 +102,21 @@ describe("Order repository unit tests", () => {
       total: order.total,
       items: [
         {
-          id: orderItem.id,
-          product_id: product.id,
-          name: orderItem.name,
-          price: orderItem.price,
-          quantity: orderItem.quantity,
-          order_id: order.id,
-        },
-        {
           id: orderItem2.id,
           product_id: product.id,
           name: orderItem2.name,
           price: orderItem2.price,
           quantity: orderItem2.quantity,
           order_id: order.id,
-        }
+        },
+        {
+          id: orderItem3.id,
+          product_id: product.id,
+          name: orderItem3.name,
+          price: orderItem3.price,
+          quantity: orderItem3.quantity,
+          order_id: order.id,
+        },
       ]
     })
 
