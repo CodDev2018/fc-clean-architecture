@@ -48,6 +48,10 @@ export default class Customer {
     return this._email;
   }
 
+  get active() {
+    return this._active;
+  }
+
   get rewardPoints() {
     return this._rewardPoints;
   }
@@ -68,6 +72,10 @@ export default class Customer {
 
   set address(address: Address) {
     this._address = address;
+  }
+
+  get address() {
+    return this._address;
   }
 
   activate() {

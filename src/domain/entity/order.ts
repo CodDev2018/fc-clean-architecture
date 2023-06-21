@@ -31,6 +31,24 @@ export default class Order {
     return true;
   }
 
+  addItem(item: OrderItem) {
+    this._items.push(item);
+    this._total += item.totalPrice;
+    this.validate();
+  }
+
+  get id() {
+    return this._id;
+  }
+
+  get customerId() {
+    return this._customerId;
+  }
+
+  get items() {
+    return this._items;
+  }
+
   get total() {
     return this._total;
   }
