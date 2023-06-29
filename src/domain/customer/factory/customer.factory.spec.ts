@@ -15,15 +15,20 @@ describe("Customer Factory unit test", () => {
   });
 
   it("should create a customer with address", () => {
-    const address = new Address("Rua 1", 10, "12345678", "Cidade 1");
     let customer = CustomerFactory.createWithAddress(
       "Jose da Silva",
       "josedasilva@email.com",
-      address
+      "Rua 1",
+      10,
+      "12345678",
+      "Cidade 1"
     );
 
-    expect(customer.id).toBeDefined();  
+    expect(customer.id).toBeDefined();
     expect(customer.name).toEqual("Jose da Silva");
-    expect(customer.address).toBe(address);
+    expect(customer.address.street).toEqual("Rua 1");
+    expect(customer.address.number).toEqual(10);
+    expect(customer.address.zip).toEqual("12345678");
+    expect(customer.address.city).toEqual("Cidade 1");
   });
 });
