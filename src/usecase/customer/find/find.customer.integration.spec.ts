@@ -1,9 +1,9 @@
 import { Sequelize } from "sequelize-typescript";
-import CustomerModel from "../../../infrastructure/customer/repository/sequelize/customer.model";
-import CustomerRepository from "../../../infrastructure/customer/repository/sequelize/customer.repository";
 import Customer from "../../../domain/customer/entity/customer";
 import Address from "../../../domain/customer/value-object/address";
 import FindCustomerUsecase from './find.customer.usecase';
+import CustomerModel from "../../../infraestructure/customer/repository/sequelize/customer.model";
+import CustomerRepository from "../../../infraestructure/customer/repository/sequelize/customer.repository";
 
 describe("Find customer use case integration test", () => {
   let sequilize: Sequelize;
