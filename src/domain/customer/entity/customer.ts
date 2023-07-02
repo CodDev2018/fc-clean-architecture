@@ -1,9 +1,10 @@
+import Entity from "../../@shared/entity/entity.abstract";
+import NotificationError from "../../@shared/notification/notification.errors";
 import Address from "../value-object/address";
 
 const REGEX_EMAIL = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/s;
 
-export default class Customer {
-  private _id: string;
+export default class Customer extends Entity{
   private _name: string;
   private _email: string;
   private _address!: Address;
@@ -11,6 +12,7 @@ export default class Customer {
   private _rewardPoints: number = 0;
 
   constructor(id: string, name: string, email: string) {
+    super();
     this._id = id;
     this._name = name;
     this._email = email;
@@ -19,21 +21,34 @@ export default class Customer {
 
   validate() {
     if (this._id?.length === 0) {
-      throw new Error("Id is required");
+      this.notification.addError({
+        context: "customer",
+        message:"Id is required"
+      });
     }
 
     if (this._name?.length === 0) {
-      throw new Error("Name is required");
+      this.notification.addError({
+        context: "customer",
+        message:"Name is required"
+      });
     }
 
     if (this._email?.length === 0) {
-      throw new Error("Email is required");
+      this.notification.addError({
+        context: "customer",
+        message:"Email is required"
+      });
+    } else if (!REGEX_EMAIL.test(this._email)) {
+      this.notification.addError({
+        context: "customer",
+        message:"Email is invalid"
+      });
     }
-    if (!REGEX_EMAIL.test(this._email)) {
-      throw new Error("Email is invalid");
+    
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.errors);
     }
-
-    return true;
   }
   
   get id() {

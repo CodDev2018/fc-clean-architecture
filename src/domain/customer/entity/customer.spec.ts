@@ -5,25 +5,31 @@ describe("Customer unit tests", () => {
   it("should throw erro when id is empty", () => {
     expect(() => {
       new Customer("", "John Doe", "john@email.com");
-    }).toThrowError("Id is required");
+    }).toThrowError("customer: Id is required");
   });
 
   it("should throw erro when name is empty", () => {
     expect(() => {
       new Customer("1", "", "john@email.com");
-    }).toThrowError("Name is required");
+    }).toThrowError("customer: Name is required");
   });
 
   it("should throw erro when email is empty", () => {
     expect(() => {
       new Customer("1", "John Doe", "");
-    }).toThrowError("Email is required");
+    }).toThrowError("customer: Email is required");
   });
 
   it("should throw erro when email is invalid", () => {
     expect(() => {
       new Customer("1", "John Doe", "johnemail.com");
-    }).toThrowError("Email is invalid");
+    }).toThrowError("customer: Email is invalid");
+  });
+
+  it("should throw error when id, name and email are empty", () => {
+    expect(() => {
+      new Customer("", "", "");
+    }).toThrowError("customer: Id is required, customer: Name is required, customer: Email is required");
   });
 
   it("should change name", () => {
