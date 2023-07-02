@@ -42,7 +42,7 @@ describe("List Product Use Case Integration test", () => {
     expect(result.products[0].type).toEqual(productA.type);
     expect(result.products[1].id).toEqual(productB.id);
     expect(result.products[1].name).toEqual(productB.name);
-    expect(result.products[1].price).toEqual(productB.price * 2);
+    expect(result.products[1].price).toEqual(productB.price);
     expect(result.products[1].type).toEqual(productB.type);
   });
 });

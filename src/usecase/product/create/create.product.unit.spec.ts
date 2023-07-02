@@ -28,6 +28,7 @@ describe("Create Product Use Case Unit test", () => {
       id: expect.any(String),
       name: "Product A",
       price: 10,
+      type: "A"
     }
 
     expect(result).toEqual(output);
@@ -60,6 +61,7 @@ describe("Create Product Use Case Unit test", () => {
       id: expect.any(String),
       name: "Product A",
       price: 20,
+      type: "B"
     }
 
     expect(result).toEqual(output);

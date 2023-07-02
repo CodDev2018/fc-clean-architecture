@@ -33,7 +33,8 @@ describe("Create Product Use Case Integration test", () => {
     const output = {
       id: expect.any(String),
       name: "Product A",
-      price: 10
+      price: 10,
+      type: "A",
     };
 
     const result = await useCase.execute(input);

@@ -32,4 +32,49 @@ describe("Customer API e2e tests", () => {
     expect(response.body.address.city).toBe("New York");
     expect(response.body.address.zip).toBe("123456");
   });
+
+  it("should not create a customer with invalid data", async () => {
+    const response = await request(app).post("/customer").send({
+      name: "John Doe",
+    });
+
+    expect(response.status).toBe(500);
+  });
+
+  it("should list all customers", async () => {
+    const response = await request(app)
+      .post("/customer")
+      .send({
+        name: "John Doe",
+        email: "john@email.com",
+        address: {
+          street: "Main Street",
+          number: 123,
+          city: "New York",
+          zip: "123456",
+        },
+      });
+
+    const response2 = await request(app)
+      .post("/customer")
+      .send({
+        name: "Jane Doe",
+        email: "jane@email.com",
+        address: {
+          street: "Main Street",
+          number: 123,
+          city: "New York",
+          zip: "123456",
+        },
+      });
+
+    const response3 = await request(app).get("/customer");
+
+    expect(response3.status).toBe(200);
+    expect(response3.body.customers.length).toBe(2);
+    const customer1 = response3.body.customers[0];
+    expect(customer1.name).toBe("John Doe");
+    const customer2 = response3.body.customers[1];
+    expect(customer2.name).toBe("Jane Doe");
+  });
 });

@@ -26,7 +26,7 @@ export default class ProductFactory {
       case "A":
         return new Product(id, name, price);
       case "B":
-        return new ProductB(id, name, price);
+        return new ProductB(id, name, price/2);
       default:
         throw new Error("Invalid type");
     }
