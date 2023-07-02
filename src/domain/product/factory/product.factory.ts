@@ -4,8 +4,7 @@ import ProductInterface from "../entity/product.interface";
 import ProductB from "../entity/product-b";
 
 export default class ProductFactory {
-
-  static create(type: string, name: string, price: number):ProductInterface {
+  static create(type: string, name: string, price: number): ProductInterface {
     const id = uuid();
     switch (type) {
       case "A":
@@ -17,4 +16,19 @@ export default class ProductFactory {
     }
   }
 
+  static hydrate(
+    id: string,
+    name: string,
+    price: number,
+    type: string
+  ): ProductInterface {
+    switch (type) {
+      case "A":
+        return new Product(id, name, price);
+      case "B":
+        return new ProductB(id, name, price);
+      default:
+        throw new Error("Invalid type");
+    }
+  }
 }

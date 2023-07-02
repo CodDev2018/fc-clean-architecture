@@ -8,4 +8,5 @@ export interface OutputUpdateProductDto {
   id: string;
   name: string;
   price: number;
+  type: string;
 }

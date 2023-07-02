@@ -4,6 +4,7 @@ export default class Product implements ProductInterface{
   private _id: string;
   private _name: string;
   private _price: number;
+  private _type: string = "A";
 
   constructor(id: string, name: string, price: number) {
     this._id = id;
@@ -46,5 +47,9 @@ export default class Product implements ProductInterface{
 
   get price() {
     return this._price;
+  }
+
+  get type() {
+    return this._type;
   }
 }

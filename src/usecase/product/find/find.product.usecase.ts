@@ -15,6 +15,7 @@ export default class FindProductUseCase {
       id: product.id,
       name: product.name,
       price: product.price,
+      type: product.type,
     };
   }
 }

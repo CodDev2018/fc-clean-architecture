@@ -1,5 +1,5 @@
 export interface InputCreateProductDto {
-  type: "A" | "B";
+  type: "A" | "B" | string;
   name: string;
   price: number;
 }

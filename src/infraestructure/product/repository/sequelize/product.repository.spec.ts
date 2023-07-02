@@ -33,6 +33,7 @@ describe("Product repository unit tests", () => {
       id: "1",
       name: "Product 1",
       price: 10,
+      type: "A",
     });
   });
 
@@ -53,6 +54,7 @@ describe("Product repository unit tests", () => {
       id: "1",
       name: "Product 2",
       price: 20,
+      type: "A",
     });
   });
 
@@ -69,6 +71,7 @@ describe("Product repository unit tests", () => {
       id: foundProduct.id,
       name: foundProduct.name,
       price: foundProduct.price,
+      type: foundProduct.type,
     });
   });
 

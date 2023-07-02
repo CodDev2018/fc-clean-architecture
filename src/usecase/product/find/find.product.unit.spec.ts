@@ -25,6 +25,7 @@ describe("Find Product Use Case Unit test", () => {
       id: product.id,
       name: product.name,
       price: product.price,
+      type: product.type,
     };
 
     expect(result).toEqual(output);
