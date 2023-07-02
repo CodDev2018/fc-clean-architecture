@@ -1,5 +1,6 @@
 import Entity from "../../@shared/entity/entity.abstract";
 import NotificationError from "../../@shared/notification/notification.errors";
+import CustomerValidatorFactory from "../factory/customer.validator.factory";
 import Address from "../value-object/address";
 
 const REGEX_EMAIL = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/s;
@@ -20,34 +21,10 @@ export default class Customer extends Entity{
   }
 
   validate() {
-    if (this._id?.length === 0) {
-      this.notification.addError({
-        context: "customer",
-        message:"Id is required"
-      });
-    }
-
-    if (this._name?.length === 0) {
-      this.notification.addError({
-        context: "customer",
-        message:"Name is required"
-      });
-    }
-
-    if (this._email?.length === 0) {
-      this.notification.addError({
-        context: "customer",
-        message:"Email is required"
-      });
-    } else if (!REGEX_EMAIL.test(this._email)) {
-      this.notification.addError({
-        context: "customer",
-        message:"Email is invalid"
-      });
-    }
+    CustomerValidatorFactory.create().validate(this);
     
-    if (this.notification.hasErrors()) {
-      throw new NotificationError(this.notification.errors);
+    if (this._notification.hasErrors()) {
+      throw new NotificationError(this._notification.errors);
     }
   }
   

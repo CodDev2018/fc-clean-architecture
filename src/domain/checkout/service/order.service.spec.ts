@@ -2,6 +2,7 @@ import Customer from '../../customer/entity/customer';
 import Order from '../entity/order';
 import OrderItem from '../entity/order_item';
 import OrderService from './order.service';
+import { v4 as uuid } from 'uuid';
 
 describe("Order Service unit tests", () => {
 
@@ -20,7 +21,7 @@ describe("Order Service unit tests", () => {
   })
 
   it("should place an order", () => {
-    const customer = new Customer("c1", "Customer 1", "customer@email.com")
+    const customer = new Customer(uuid(), "Customer 1", "customer@email.com")
     const item = new OrderItem("i1", "p1", "Item 1", 10, 1);
 
     const order = OrderService.placeOrder(customer, [item]);
@@ -29,7 +30,7 @@ describe("Order Service unit tests", () => {
   })
 
   it("should throw an error when placing an order with no items", () => {
-    const customer = new Customer("c1", "Customer 1", "customer@email.com")
+    const customer = new Customer(uuid(), "Customer 1", "customer@email.com")
     expect(() => OrderService.placeOrder(customer, [])).toThrowError("Items are required");
   })
 })

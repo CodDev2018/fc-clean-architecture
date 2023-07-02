@@ -1,14 +1,10 @@
-import { Sequelize } from "sequelize-typescript";
-import CustomerModel from "../../../infrastructure/customer/repository/sequelize/customer.model";
-import CustomerRepository from "../../../infrastructure/customer/repository/sequelize/customer.repository";
 import Customer from "../../../domain/customer/entity/customer";
 import Address from "../../../domain/customer/value-object/address";
 import FindCustomerUsecase from './find.customer.usecase';
 import CustomerRepositoryInterface from "../../../domain/customer/repository/customer-repository.interface";
+import { v4 as uuid } from "uuid";
 
-
-
-const customer = new Customer("1", "John", "john@email.com")
+const customer = new Customer(uuid(), "John", "john@email.com")
 const address = new Address("Street 1", 1, "00000-000", "City 1");
 customer.address = address;
 
@@ -28,11 +24,11 @@ describe("Find customer use case unit test", () => {
     const usecase = new FindCustomerUsecase(customerRepository);
 
     const input = {
-      id: "1"
+      id: customer.id
     }
 
     const output = {
-      id: "1",
+      id: customer.id,
       name: "John",
       email: "john@email.com",
       address: {

@@ -4,6 +4,7 @@ import Address from "../../../domain/customer/value-object/address";
 import FindCustomerUsecase from './find.customer.usecase';
 import CustomerModel from "../../../infraestructure/customer/repository/sequelize/customer.model";
 import CustomerRepository from "../../../infraestructure/customer/repository/sequelize/customer.repository";
+import { v4 as uuid } from "uuid";
 
 describe("Find customer use case integration test", () => {
   let sequilize: Sequelize;
@@ -27,18 +28,18 @@ describe("Find customer use case integration test", () => {
     const customerRepository = new CustomerRepository();
     const usecase = new FindCustomerUsecase(customerRepository);
 
-    const customer = new Customer("1", "John", "john@email.com")
+    const customer = new Customer(uuid(), "John", "john@email.com")
     const address = new Address("Street 1", 1, "00000-000", "City 1");
     customer.address = address;
 
     await customerRepository.create(customer);
 
     const input = {
-      id: "1"
+      id: customer.id
     }
 
     const output = {
-      id: "1",
+      id: customer.id,
       name: "John",
       email: "john@email.com",
       address: {

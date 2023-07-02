@@ -11,6 +11,8 @@ import ProductRepository from '../../../product/repository/sequelize/product.rep
 import Product from '../../../../domain/product/entity/product';
 import OrderItem from '../../../../domain/checkout/entity/order_item';
 import Order from '../../../../domain/checkout/entity/order';
+import { v4 as uuid } from 'uuid';
+
 describe("Order repository unit tests", () => {
 
   let sequilize: Sequelize;
@@ -32,16 +34,16 @@ describe("Order repository unit tests", () => {
 
   it("should create an new order", async () => {
     const customerRepository = new CustomerRepository();
-    const customer = new Customer("c1", "Customer 1", "customer@email.com");
+    const customer = new Customer(uuid(), "Customer 1", "customer@email.com");
     customer.address = new Address("Street 1", 1, "00000-000", "City 1");
     customerRepository.create(customer);
 
     const productRepository = new ProductRepository();
-    const product = new Product("p1", "Product 1", 10);
+    const product = new Product(uuid(), "Product 1", 10);
     await productRepository.create(product);
 
-    const orderItem = new OrderItem("oi1", "p1", "Product 1", 10, 2);
-    const order = new Order("o1", "c1", [orderItem]);
+    const orderItem = new OrderItem("oi1", product.id, "Product 1", 10, 2);
+    const order = new Order("o1", customer.id, [orderItem]);
 
     const orderRepository = new OrderRepository();
     await orderRepository.create(order);
@@ -70,22 +72,22 @@ describe("Order repository unit tests", () => {
 
   it("should update an order", async () => {
     const customerRepository = new CustomerRepository();
-    const customer = new Customer("c1", "Customer 1", "customer@email.com");
+    const customer = new Customer(uuid(), "Customer 1", "customer@email.com");
     customer.address = new Address("Street 1", 1, "00000-000", "City 1");
     customerRepository.create(customer);
 
     const productRepository = new ProductRepository();
-    const product = new Product("p1", "Product 1", 10);
+    const product = new Product(uuid(), "Product 1", 10);
     await productRepository.create(product);
 
-    const orderItem = new OrderItem("oi1", "p1", "Product 1", 10, 2);
-    const orderItem2 = new OrderItem("oi2", "p1", "Product 1", 10, 3);
-    const order = new Order("o1", "c1", [orderItem, orderItem2]);
+    const orderItem = new OrderItem("oi1", product.id, "Product 1", 10, 2);
+    const orderItem2 = new OrderItem("oi2", product.id, "Product 1", 10, 3);
+    const order = new Order("o1", customer.id, [orderItem, orderItem2]);
 
     const orderRepository = new OrderRepository();
     await orderRepository.create(order);
 
-    const orderItem3 = new OrderItem("oi3", "p1", "Product 1", 10, 3);
+    const orderItem3 = new OrderItem("oi3", product.id, "Product 1", 10, 3);
     order.addItem(orderItem3);
     order.removeItem(orderItem);
 
@@ -124,16 +126,16 @@ describe("Order repository unit tests", () => {
 
   it("should find an order by id", async () => {
     const customerRepository = new CustomerRepository();
-    const customer = new Customer("c1", "Customer 1", "customer@email.com");
+    const customer = new Customer(uuid(), "Customer 1", "customer@email.com");
     customer.address = new Address("Street 1", 1, "00000-000", "City 1");
     customerRepository.create(customer);
 
     const productRepository = new ProductRepository();
-    const product = new Product("p1", "Product 1", 10);
+    const product = new Product(uuid(), "Product 1", 10);
     await productRepository.create(product);
 
-    const orderItem = new OrderItem("oi1", "p1", "Product 1", 10, 2);
-    const order = new Order("o1", "c1", [orderItem]);
+    const orderItem = new OrderItem("oi1", product.id, "Product 1", 10, 2);
+    const order = new Order("o1", customer.id, [orderItem]);
 
     const orderRepository = new OrderRepository();
     await orderRepository.create(order);
@@ -150,22 +152,22 @@ describe("Order repository unit tests", () => {
 
   it("should find all orders", async () => {
     const customerRepository = new CustomerRepository();
-    const customer = new Customer("c1", "Customer 1", "customer@email.com");
+    const customer = new Customer(uuid(), "Customer 1", "customer@email.com");
     customer.address = new Address("Street 1", 1, "00000-000", "City 1");
     customerRepository.create(customer);
 
     const productRepository = new ProductRepository();
-    const product = new Product("p1", "Product 1", 10);
+    const product = new Product(uuid(), "Product 1", 10);
     await productRepository.create(product);
 
-    const orderItem1 = new OrderItem("oi1", "p1", "Product 1", 10, 2);
-    const order1 = new Order("o1", "c1", [orderItem1]);
+    const orderItem1 = new OrderItem("oi1", product.id, "Product 1", 10, 2);
+    const order1 = new Order("o1", customer.id, [orderItem1]);
 
     const orderRepository = new OrderRepository();
     await orderRepository.create(order1);
 
-    const orderItem2 = new OrderItem("oi2", "p1", "Product 1", 10, 2);
-    const order2 = new Order("o2", "c1", [orderItem2]);
+    const orderItem2 = new OrderItem("oi2", product.id, "Product 1", 10, 2);
+    const order2 = new Order("o2", customer.id, [orderItem2]);
     await orderRepository.create(order2);
 
 

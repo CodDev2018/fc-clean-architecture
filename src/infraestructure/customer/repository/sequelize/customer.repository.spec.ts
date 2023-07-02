@@ -3,6 +3,7 @@ import CustomerModel from "./customer.model";
 import CustomerRepository from "./customer.repository";
 import Customer from "../../../../domain/customer/entity/customer";
 import Address from "../../../../domain/customer/value-object/address";
+import { v4 as uuid } from "uuid";
 
 describe("Customer repository unit tests", () => {
   let sequilize: Sequelize;
@@ -24,14 +25,15 @@ describe("Customer repository unit tests", () => {
 
   it("should create a customer", async () => {
     const customerRepository = new CustomerRepository();
-    const customer = new Customer("1", "Customer 1", "customer@email.com");
+    const id = uuid();
+    const customer = new Customer(id, "Customer 1", "customer@email.com");
     customer.address = new Address("Street 1", 1, "00000-000", "City 1");
     await customerRepository.create(customer);
 
-    const customerModel = await CustomerModel.findByPk("1");
+    const customerModel = await CustomerModel.findByPk(id);
 
     expect(customerModel?.toJSON()).toStrictEqual({
-      id: "1",
+      id: id,
       name: "Customer 1",
       email: customer.email,
       active: customer.active,
@@ -45,7 +47,8 @@ describe("Customer repository unit tests", () => {
 
   it("should update a customer", async () => {
     const customerRepository = new CustomerRepository();
-    const customer = new Customer("1", "Customer 1", "customer@email.com");
+    const id = uuid();
+    const customer = new Customer(id, "Customer 1", "customer@email.com");
     customer.address = new Address("Street 1", 1, "00000-000", "City 1");;
     await customerRepository.create(customer);
 
@@ -57,10 +60,10 @@ describe("Customer repository unit tests", () => {
 
     await customerRepository.update(customer);
 
-    const customerModel = await CustomerModel.findByPk("1");
+    const customerModel = await CustomerModel.findByPk(id);
 
     expect(customerModel?.toJSON()).toStrictEqual({
-      id: "1",
+      id: id,
       name: customer.name,
       email: customer.email,
       active: customer.active,
@@ -75,12 +78,13 @@ describe("Customer repository unit tests", () => {
 
   it("should find a product", async () => {
     const customerRepository = new CustomerRepository();
-    const customer = new Customer("1", "Customer 1", "customer@email.com");
+    const id = uuid();
+    const customer = new Customer(id, "Customer 1", "customer@email.com");
     const address = new Address("Street 1", 1, "00000-000", "City 1");
     customer.address = address;
     await customerRepository.create(customer);
 
-    const customerFound = await customerRepository.find("1");
+    const customerFound = await customerRepository.find(id);
 
     expect(customer).toStrictEqual(customerFound);    
   });
@@ -95,11 +99,11 @@ describe("Customer repository unit tests", () => {
 
   it("should find all products", async () => {
     const customerRepository = new CustomerRepository();
-    const customer1 = new Customer("1", "Customer 1", "customer@email.com");
+    const customer1 = new Customer(uuid(), "Customer 1", "customer@email.com");
     customer1.address = new Address("Street 1", 1, "00000-000", "City 1");
     await customerRepository.create(customer1);
 
-    const customer2 = new Customer("2", "Customer 2", "customer2@email.com");
+    const customer2 = new Customer(uuid(), "Customer 2", "customer2@email.com");
     customer2.address = new Address("Street 2", 2, "11111-111", "City 2");
     await customerRepository.create(customer2);
 
