@@ -5,7 +5,7 @@ import UpdateProductUseCase from './update.product.usecase';
 import ProductFactory from "../../../domain/product/factory/product.factory";
 
 
-describe("Create Product Use Case Integration test", () => {
+describe("Update Product Use Case Integration test", () => {
   let sequilize: Sequelize;
 
   beforeEach(async () => {
@@ -23,7 +23,7 @@ describe("Create Product Use Case Integration test", () => {
     await sequilize.close();
   });
 
-  it("should create a new product", async () => {
+  it("should update a product", async () => {
     const repository = new ProductRepository();
     const useCase = new UpdateProductUseCase(repository);
     const product = ProductFactory.create("A", "Product A", 10);
